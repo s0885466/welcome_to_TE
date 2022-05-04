@@ -50,4 +50,22 @@ const tileArr: Array<ITile> = [
 ];
 
 // write You code here
-// const result: IResult = ...
+const result: IResult = tileArr.reduce(
+  (res, { price, isActive }, index) => {
+      if (!isActive) {
+          return res;
+      }
+
+      res.totalPriceSum += price;
+      res.tileCount++;
+      res.averagePriceSum = res.totalPriceSum / res.tileCount;
+
+      return res;
+  },
+  {
+      totalPriceSum: 0,
+      tileCount: 0,
+      averagePriceSum: 0,
+  }
+);
+
