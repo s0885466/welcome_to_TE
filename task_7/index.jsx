@@ -1,31 +1,32 @@
 import { useState } from 'react';
 
-const Block1 = ({ mouseEnterCallbak, imgSrc, imgAlt }) => {
-    const [ isActive, setActive ] = useState(false);
+const useLogic = (mouseEnterCallback, defaultActive = false) => {
+    const [ isActive, setActive ] = useState(defaultActive);
 
     const mouseEnterHandler = () => {
         setActive(true);
-        mouseEnterCallbak();
+        mouseEnterCallback();
     }
 
+    return { mouseEnterHandler, isActive };
+}
+
+const Block1 = ({ mouseEnterCallback, imgSrc, imgAlt }) => {
+    const { mouseEnterHandler, isActive } = useLogic(mouseEnterCallback);
+
     return (
-        <div onMouseEnter={mouseEnterHandler} className={ isActive ? 'active': '' }>
-            <img src={imgSrc} alt={imgAlt} />
-        </div>
+      <div onMouseEnter={mouseEnterHandler} className={ isActive ? 'active': '' }>
+          <img src={imgSrc} alt={imgAlt} />
+      </div>
     );
 }
 
-const Block2 = ({ mouseEnterCallbak, content }) => {
-    const [ isActive, setActive ] = useState(false);
-
-    const mouseEnterHandler = () => {
-        setActive(true);
-        mouseEnterCallbak();
-    }
+const Block2 = ({ mouseEnterCallback, content }) => {
+    const { mouseEnterHandler, isActive } = useLogic(mouseEnterCallback);
 
     return (
-        <div onMouseEnter={mouseEnterHandler} className={ isActive ? 'active': '' }>
-            <p>BLock2 content: {content}</p>
-        </div>
+      <div onMouseEnter={mouseEnterHandler} className={ isActive ? 'active': '' }>
+          <p>BLock2 content: {content}</p>
+      </div>
     );
 }
